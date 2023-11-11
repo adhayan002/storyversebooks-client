@@ -22,7 +22,7 @@ function Sell() {
         e.preventDefault();
     
         try {
-          const response = await fetch('https://storyversebooks-api.onrender.com/upload-book', {
+          const response = await fetch('https://storyversebooks-api.vercel.app/upload-book', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -32,7 +32,14 @@ function Sell() {
     
           if (response.ok) {
             console.log('Data successfully posted!');
-            window.location.reload(false)
+            setFormData({
+              bookTitle: '',
+              category: '',
+              author: '',
+              imageURL: '',
+              bookDescription: '',
+              bookPDFURL: '',
+            })
           } else {
             console.error('Failed to post data');
           }
@@ -71,6 +78,7 @@ function Sell() {
             name="category"
             value={formData.category}
             onChange={handleChange}
+            required
           />
         </div>
       </div>
@@ -88,6 +96,7 @@ function Sell() {
             name="author"
             value={formData.author}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="w-1/2 px-3">
@@ -101,6 +110,7 @@ function Sell() {
             name="imageURL"
             value={formData.imageURL}
             onChange={handleChange}
+            required
           />
         </div>
       </div>
@@ -117,6 +127,7 @@ function Sell() {
             value={formData.bookDescription}
             onChange={handleChange}
             rows="4"
+            required
           ></textarea>
         </div>
       </div>

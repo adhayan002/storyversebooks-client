@@ -6,7 +6,7 @@ function Book() {
   const [productData, setProductData] = useState(null);
 
   useEffect(() => {
-    fetch(`https://storyversebooks-api.onrender.com/book/${id}`)
+    fetch(`https://storyversebooks-api.vercel.app/book/${id}`)
       .then((res) => res.json())
       .then((data) => setProductData(data))
       .catch((error) => console.error('Error fetching product data:', error));
@@ -44,16 +44,17 @@ function Book() {
         <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
           {/* Additional content here */}
         </div>
+        {productData.bookPDFURL &&
         <div className="flex items-center">
-          <Link
-            to={productData.bookPDFURL}
-            className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read PDF
-          </Link>
-        </div>
+        <Link
+          to={productData.bookPDFURL}
+          className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Read PDF
+        </Link>
+      </div>}
       </div>
     </div>
   </div>

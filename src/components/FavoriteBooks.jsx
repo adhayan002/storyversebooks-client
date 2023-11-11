@@ -5,7 +5,7 @@ function FavoriteBooks() {
     const [books,setBooks]=useState([])
 
     useEffect(()=>{
-        fetch("https://storyversebooks-api.onrender.com/all-books").then(res=>res.json()).then(data=>setBooks(data))
+        fetch("https://storyversebooks-api.vercel.app/all-books").then(res=>res.json()).then(data=>setBooks(data))
     },[])
 
   return (

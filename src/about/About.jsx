@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom"
+
 const links = [
   { name: 'Home', href: '/' },
-  { name: 'Shop', href: 'shop' },
-  { name: 'Blog', href: 'blog' },
+  { name: 'Shop', href: '/shop' },
+  { name: 'Blog', href: '/blog' },
 
 ]
 
@@ -50,13 +52,13 @@ function About() {
           </p>
         </div>
         <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
-          <div className="grid grid-cols-1 gap-x-8 gap-y-6 text-base font-semibold leading-7 text-white sm:grid-cols-2 md:flex lg:gap-x-10">
-            {links.map((link) => (
-              <a key={link.name} href={link.href}>
-                {link.name} <span aria-hidden="true">&rarr;</span>
-              </a>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 gap-x-8 gap-y-6 text-base font-semibold leading-7 text-white sm:grid-cols-2 md:flex lg:gap-x-10">
+          {links.map((link) => (
+            <Link key={link.name} to={link.href}>
+            {link.name} <span aria-hidden="true">&rarr;</span>
+          </Link>
+        ))}
+        </div>
 
         </div>
       </div>
