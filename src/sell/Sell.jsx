@@ -36,39 +36,45 @@ function Sell() {
 
  
     
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-       
-        
-        try {
-          const response = await fetch('https://storyversebooks-api.vercel.app/upload-book', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-    
-          if (response.ok) {
-            console.log('Data successfully posted!');
-            console.log(formData)
-            setFormData({
-              bookTitle: '',
-              seller:'',
-              category: '',
-              author: '',
-              imageURL: '',
-              bookDescription: '',
-              bookPDFURL: '',
-            })
-            setRedirect(true)
-          } else {
-            console.error('Failed to post data');
-          }
-        } catch (error) {
-          console.error('Error posting data:', error);
-        }
-      };
+    const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // Additional validation
+  if (!formData.bookTitle || !formData.category || !formData.author || !formData.imageURL || !formData.bookDescription) {
+    console.error('All fields must be filled.');
+    return;
+  }
+
+  try {
+    const response = await fetch('https://storyversebooks-api.vercel.app/upload-book', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      console.log('Data successfully posted!');
+      console.log(formData);
+      setFormData({
+        bookTitle: '',
+        seller: '',
+        category: '',
+        author: '',
+        imageURL: '',
+        bookDescription: '',
+        bookPDFURL: '',
+      });
+      setRedirect(true);
+    } else {
+      console.error('Failed to post data');
+    }
+  } catch (error) {
+    console.error('Error posting data:', error);
+  }
+};
+
       if (redirect) {
         return <Navigate to={`/shop`} />;
       }
