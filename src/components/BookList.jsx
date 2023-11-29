@@ -35,4 +35,4 @@ function BookList({ data }) {
   )
 }
 
-export default BookList
+export default BookList;
