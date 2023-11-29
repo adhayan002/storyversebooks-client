@@ -1,14 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import { UserContext } from "../UserContext";
+import { useContext } from "react";
+import {  Navigate,useParams } from "react-router-dom";
+
 
 function Sell() {
+  const { userInfo } = useContext(UserContext);
+  const [redirect,setRedirect]=useState(false)
     const [formData, setFormData] = useState({
         bookTitle: '',
+        seller:userInfo,
         category: '',
         author: '',
         imageURL: '',
         bookDescription: '',
         bookPDFURL: '',
       });
+
+      useEffect(() => {
+        console.log('Component re-rendered. userInfo:', userInfo);
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          seller: userInfo,
+        }));
+      }, [userInfo]);
+   
     
       const handleChange = (e) => {
         const { name, value } = e.target;
@@ -17,10 +33,13 @@ function Sell() {
           [name]: value,
         });
       };
+
+ 
     
       const handleSubmit = async (e) => {
         e.preventDefault();
-    
+       
+        
         try {
           const response = await fetch('https://storyversebooks-api.vercel.app/upload-book', {
             method: 'POST',
@@ -32,14 +51,17 @@ function Sell() {
     
           if (response.ok) {
             console.log('Data successfully posted!');
+            console.log(formData)
             setFormData({
               bookTitle: '',
+              seller:'',
               category: '',
               author: '',
               imageURL: '',
               bookDescription: '',
               bookPDFURL: '',
             })
+            setRedirect(true)
           } else {
             console.error('Failed to post data');
           }
@@ -47,6 +69,10 @@ function Sell() {
           console.error('Error posting data:', error);
         }
       };
+      if (redirect) {
+        return <Navigate to={`/shop`} />;
+      }
+      
     
   return (
     <>

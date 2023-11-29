@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom"
+import HomeComponent1 from "./HomeComponent1"
+import Footer from '../components/Footer';
 
 function Home() {
   return (
     <>
-          <div className="mx-auto max-w-2xl mt-32 md:mt-8 lg:mt-8 sm-md:mt-32 sm:mt-64 sm:py-24">
+          <div className="mx-auto max-w-[38rem] mt-48 px-12 md:px-0 md:mt-8 lg:mt-24 sm-md:mt-32 sm:mt-64 sm:py-24 h-screen ">
           <div className="hidden sm:mb-6 sm:flex sm:justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
               We are now encapsulating our journeys into a Blog Post.{' '}
@@ -50,6 +52,8 @@ function Home() {
             }}
           />
         </div>
+        <HomeComponent1/>
+        
     </>
   )
 }

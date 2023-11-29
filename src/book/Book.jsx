@@ -1,16 +1,52 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-
+import { UserContext } from "../UserContext";
+import { useContext } from "react";
+import { Navigate } from "react-router-dom";
 function Book() {
+  const [redirect,setRedirect]=useState(false)
   const { id } = useParams();
   const [productData, setProductData] = useState(null);
+  const {userInfo}=useContext(UserContext)
+
 
   useEffect(() => {
     fetch(`https://storyversebooks-api.vercel.app/book/${id}`)
       .then((res) => res.json())
-      .then((data) => setProductData(data))
+      .then((data) => {
+        console.log(data);
+        setProductData(data)})
       .catch((error) => console.error('Error fetching product data:', error));
   }, [id]);
+  
+  const handleDelete=()=>{
+    fetch(`https://storyversebooks-api.vercel.app/book/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        console.log('Resource deleted successfully');
+        setRedirect(true)
+      })
+      .catch(error => {
+        console.error('Error deleting resource:', error);
+      });
+  }
+
+  if(redirect){
+    return (
+      <div>
+        <Navigate to={"/"} />
+      </div>
+    );
+  }
 
   if (!productData) {
     return <div class="text-center mt-64">
@@ -34,27 +70,47 @@ function Book() {
         src={productData.imageURL}
       />
       <div className="lg:w-2/3 w-full lg:pl-10 lg:py-6 mt-3 lg:mt-0"> {/* Adjusted margin-top (mt-3) */}
-        <h2 className="text-sm title-font text-gray-500 tracking-widest">
-          {productData.author}
-        </h2>
+      <h2 className="text-sm title-font text-gray-500 tracking-widest">
+        Sold By {productData.seller}
+      </h2>
         <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
           {productData.bookTitle}
         </h1>
+        <h2 className="text-sm title-font text-gray-500 tracking-widest">
+          By {productData.author}
+        </h2>
         <p className="leading-relaxed">{productData.bookDescription}</p>
         <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-          {/* Additional content here */}
         </div>
-        {productData.bookPDFURL &&
-        <div className="flex items-center">
-        <Link
-          to={productData.bookPDFURL}
-          className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Read PDF
-        </Link>
-      </div>}
+       
+        <div className="flex justify-between mt-6 items-center pb-5 mb-5">
+        {productData.bookPDFURL && (
+          <Link
+            to={productData.bookPDFURL}
+            className="flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Read PDF
+          </Link>
+        )}
+        {userInfo === productData.seller && (
+          <Link
+            className="flex text-white bg-black py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+            to={`/editbook/${id}`}
+          >
+            Edit
+          </Link>
+        )}
+        {userInfo === productData.seller && (
+          <button
+            className="flex text-white bg-red-500 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+        )}
+      </div>
       </div>
     </div>
   </div>
