@@ -27,7 +27,7 @@ export default function App() {
         <Route path="editbook/:id" element={<EditBook/>}/>
         <Route path="login" element={<Login/>}/>
         <Route path="register" element={<Register/>}/>
-        <Route path="*" element={<Error/>}/>
+      <Route path="*" element={<Error/>}/>
       </Route>
     </Routes>
     </UserContextProvider>
