@@ -56,7 +56,6 @@ function Sell() {
 
     if (response.ok) {
       console.log('Data successfully posted!');
-      console.log(formData);
       setFormData({
         bookTitle: '',
         seller: '',
