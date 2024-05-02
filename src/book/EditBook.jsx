@@ -41,7 +41,7 @@ function EditBook() {
        
         
         try {
-          const response = await fetch(`https://storyversebooks-api.vercel.app/book/${id}`, {
+          const response = await fetch(`https://svbooks-api.vercel.app/book/${id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
