@@ -8,7 +8,7 @@ function FavoriteBooks() {
     const{search,setSearch}=useContext(UserContext)
     useEffect(()=>{
         if(search==''){
-          fetch("https://storyversebooks-api.vercel.app/all-books").then(res=>res.json()).then(data=>setBooks(data))
+          fetch("https://svbooks-api.vercel.app/all-books").then(res=>res.json()).then(data=>setBooks(data))
         }else{
           fetch(`https://storyversebooks-api.vercel.app/books/${search}`)
           .then(res => res.json())
