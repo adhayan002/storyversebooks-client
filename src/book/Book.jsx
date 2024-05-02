@@ -11,7 +11,7 @@ function Book() {
 
 
   useEffect(() => {
-    fetch(`https://storyversebooks-api.vercel.app/book/${id}`)
+    fetch(`https://svbooks-api.vercel.app/book/${id}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
