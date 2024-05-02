@@ -46,7 +46,7 @@ function Sell() {
   }
 
   try {
-    const response = await fetch('https://svbooks-api.vercel.app/upload-book', {
+    const response = await fetch('https://storyversebooks-api.vercel.app/upload-book', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
